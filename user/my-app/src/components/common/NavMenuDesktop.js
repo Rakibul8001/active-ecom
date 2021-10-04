@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class NavMenuDesktop extends Component {
     render() {
         return (
-            <div>
+            <Fragment>
                 <h>This is a Navmenu component</h>
-            </div>
+            </Fragment>
         )
     }
 }

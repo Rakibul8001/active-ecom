@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class FooterMobile extends Component {
     render() {
         return (
-            <div>
+            <Fragment>
                 <h>This is also a footer Mobile component</h>
-            </div>
+            </Fragment>
         )
     }
 }

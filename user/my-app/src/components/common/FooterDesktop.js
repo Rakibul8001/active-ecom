@@ -1,13 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class FooterDesktop extends Component {
     render() {
         return (
-            <div>
+            <Fragment>
                 <h>This is footer Desktop component</h>
                 <h>This is also a footer Desktop component</h>
                 
-            </div>
+            </Fragment>
         )
     }
 }

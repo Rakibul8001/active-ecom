@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 export default class Categories extends Component {
     render() {
         return (
-            <div>
+            <Fragment>
                 
-            </div>
+            </Fragment>
         )
     }
 }
