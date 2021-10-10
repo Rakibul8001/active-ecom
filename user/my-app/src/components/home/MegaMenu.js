@@ -1,6 +1,36 @@
 import React, { Component, Fragment } from 'react'
 
 export default class MegaMenu extends Component {
+    constructor(){
+        super();
+        this.megaMenu = this.megaMenu.bind(this);
+    }
+
+    componentDidMount(){
+        this.megaMenu();
+    }
+
+    megaMenu(){
+        var acc = document.getElementsByClassName("accordion");
+        var accNum = acc.length;
+        
+        var i;
+        for(i=0; i<accNum; i++){
+            acc[i].addEventListener("click", function(){
+                this.classList.toggle("active");
+
+                var panel = this.nextElementSibling;
+
+                if(panel.style.maxHeight){
+                    panel.style.maxHeight = null;
+                }
+                else{
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        }
+    }
+
     render() {
         return (
             <div className="accordionMenuDiv">
