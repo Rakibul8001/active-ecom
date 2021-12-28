@@ -1,0 +1,10 @@
+[2020-11-07 07:15:58] local.ERROR: There are no commands defined in the "clear" namespace. {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"clear\" namespace. at K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\symfony\\console\\Application.php:581)
+[stacktrace]
+#0 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\symfony\\console\\Application.php(632): Symfony\\Component\\Console\\Application->findNamespace('clear')
+#1 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\symfony\\console\\Application.php(230): Symfony\\Component\\Console\\Application->find('clear:view')
+#2 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\symfony\\console\\Application.php(142): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\laravel\\framework\\src\\Illuminate\\Console\\Application.php(93): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#5 K:\\ECOM\\ECOM-Tutorial-Seires\\admin\\blog\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#6 {main}
+"} 
