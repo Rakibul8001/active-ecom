@@ -13,4 +13,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/SendVisitorDetails',[VisitorListController::class,'SendVisitorDetails']);
 Route::post('/SendContactDetails',[ContactListController::class,'SendContactDetails']);
 Route::get('/SendSiteInfo',[SiteInfoController::class,'SendSiteInfo']);
-Route::get('/Send',[SiteInfoController::class,'send']);
