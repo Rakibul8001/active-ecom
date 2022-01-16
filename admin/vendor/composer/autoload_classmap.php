@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\CategoryDetailsController' => $baseDir . '/app/Http/Controllers/CategoryDetailsController.php',
     'App\\Http\\Controllers\\ContactListController' => $baseDir . '/app/Http/Controllers/ContactListController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\SiteInfoController' => $baseDir . '/app/Http/Controllers/SiteInfoController.php',
@@ -22,7 +23,8 @@ return array(
     'App\\Http\\Middleware\\TrustProxies' => $baseDir . '/app/Http/Middleware/TrustProxies.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Models\\CategoryLavel1Model' => $baseDir . '/app/Models/CategoryLavel1Model.php',
-    'App\\Models\\CatgeoryLavel2Model' => $baseDir . '/app/Models/CatgeoryLavel2Model.php',
+    'App\\Models\\CategoryLavel2Model' => $baseDir . '/app/Models/CategoryLavel2Model.php',
+    'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
     'App\\Models\\SiteInfoModel' => $baseDir . '/app/Models/SiteInfoModel.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
