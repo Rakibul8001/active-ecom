@@ -3,15 +3,30 @@ import Slider from "react-slick";
 import {Card, Col, Container, Row} from "react-bootstrap";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {Link} from "react-router-dom";
+import ApiURL from '../../api/ApiURL';
+import axios from 'axios';
 
 class NewArrival extends Component {
 
     constructor(props) {
         super(props);
+        this.state={
+            ProductData:[]
+        }
         this.next=this.next.bind(this);
         this.previous=this.previous.bind(this)
 
     }
+
+    componentDidMount(){
+        axios.get(ApiURL.productListByRemark('NEW')).then(response=>{
+            this.setState({ProductData:response.data});
+        }).catch(error=>{
+
+        });
+    }
+
     next(){
         this.slider.slickNext();
     }
@@ -20,6 +35,43 @@ class NewArrival extends Component {
     }
 
     render() {
+
+        const myList = this.state.ProductData;
+
+        const ListView = myList.map((productList,i)=>{
+            if(productList.special_price == 'NA'){
+                return <div className="p-1">
+                <Link to="/productDetails">
+                <Card className="card w-100  image-box ">
+                    <img src={productList.image}/>
+                    <Card.Body>
+                        <h5 className="product-name-on-card">{productList.title}</h5>
+                        <p className="product-price-on-card">Price: {productList.price}</p>
+                    </Card.Body>
+                </Card>
+                </Link>
+
+            </div>
+            }
+            else{
+                return <div className="p-1">
+                <Link to="/productDetails">
+                <Card className="card image-box ">
+                    <img src={productList.image}/>
+                    <Card.Body>
+                        <h5 className="product-name-on-card">{productList.title}</h5>
+                        <p className="product-price-on-card">
+                            Price: <strike className="text-secondary">{productList.price}</strike> {productList.special_price}
+                        </p>
+                    </Card.Body>
+                </Card>
+                </Link>
+
+            </div>
+            }
+
+        });
+
 
         const settings = {
             dots: false,
@@ -69,51 +121,7 @@ class NewArrival extends Component {
                 </h4>
                 <h6 className="section-sub-title pb-3">Some Of Our Exclusive Collection, You May Like</h6>
                     <Slider  ref={c=>(this.slider=c)}   {...settings}>
-                        <div className="p-1">
-                            <Card className="card w-100  image-box ">
-                                <img src="https://static-01.daraz.com.bd/p/66ec675d545eeabf8eb04415318d3db5.jpg_400x400q75-product.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="p-1">
-                            <Card className="card w-100 image-box ">
-                                <img src="https://static-01.daraz.com.bd/p/66ec675d545eeabf8eb04415318d3db5.jpg_400x400q75-product.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="p-1">
-                            <Card className="card w-100   image-box ">
-                                <img src="https://static-01.daraz.com.bd/p/66ec675d545eeabf8eb04415318d3db5.jpg_400x400q75-product.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="p-1">
-                            <Card className="card w-100  image-box ">
-                                <img src="https://static-01.daraz.com.bd/p/66ec675d545eeabf8eb04415318d3db5.jpg_400x400q75-product.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                        <div className="p-1">
-                            <Card className="card w-100  image-box ">
-                                <img src="https://static-01.daraz.com.bd/p/66ec675d545eeabf8eb04415318d3db5.jpg_400x400q75-product.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </div>
+                        {ListView}
                     </Slider>
 
 

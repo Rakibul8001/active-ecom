@@ -4,6 +4,10 @@ class ApiURL{
     static SendContactDetails = this.BaseURL+"SendContactDetails"
     static SendSiteInfo = this.BaseURL+"SendSiteInfo"
     static SendCategoryDetails = this.BaseURL+"SendCategoryDetails"
+
+    static productListByRemark(remark){
+        return this.BaseURL+"productListByRemark/"+remark
+    }
 }
 
 export default ApiURL;
