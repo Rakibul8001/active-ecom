@@ -8,6 +8,12 @@ class ApiURL{
     static productListByRemark(remark){
         return this.BaseURL+"productListByRemark/"+remark
     }
+    static productListBySubcategory(Category,Subcategory){
+        return this.BaseURL+"productListBySubcategory/"+Category+"/"+Subcategory
+    }
+    static productListByCategory(Category){
+        return this.BaseURL+"productListByCategory/"+Category
+    }
 }
 
 export default ApiURL;

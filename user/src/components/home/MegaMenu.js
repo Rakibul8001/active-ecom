@@ -1,4 +1,5 @@
 import React, {Component,Fragment} from 'react';
+import {Link} from "react-router-dom";
 
 class MegaMenu extends Component {
 
@@ -31,7 +32,9 @@ class MegaMenu extends Component {
                         <ul>
                             {
                                 (parentList.SubCategory).map((childList,i)=>{
-                                    return <li><a href="#" className="accordionItem">{childList.cat2_name}</a></li>
+                                    return <li>
+                                        <Link to={"ProductBySubcategory/"+childList.cat1_name+"/"+childList.cat2_name} className="accordionItem">{childList.cat2_name}</Link>
+                                        </li>
                                 })
                             }
                         </ul>
