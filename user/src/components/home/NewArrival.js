@@ -6,13 +6,16 @@ import "slick-carousel/slick/slick-theme.css";
 import {Link} from "react-router-dom";
 import ApiURL from '../../api/ApiURL';
 import axios from 'axios';
+import NewArrivalPlaceholder from "../placeholder/NewArrivalPlaceholder";
 
 class NewArrival extends Component {
 
     constructor(props) {
         super(props);
         this.state={
-            ProductData:[]
+            ProductData:[],
+            isLoading:"",
+            MainDiv:"d-none"
         }
         this.next=this.next.bind(this);
         this.previous=this.previous.bind(this)
@@ -21,7 +24,7 @@ class NewArrival extends Component {
 
     componentDidMount(){
         axios.get(ApiURL.productListByRemark('NEW')).then(response=>{
-            this.setState({ProductData:response.data});
+            this.setState({ProductData:response.data, isLoading:"d-none", MainDiv:" "});
         }).catch(error=>{
 
         });
@@ -41,7 +44,7 @@ class NewArrival extends Component {
         const ListView = myList.map((productList,i)=>{
             if(productList.special_price == 'NA'){
                 return <div className="p-1">
-                <Link to="/productDetails">
+                <Link to={"productDetails/"+productList.product_code}>
                 <Card className="card w-100  image-box ">
                     <img src={productList.image}/>
                     <Card.Body>
@@ -55,7 +58,7 @@ class NewArrival extends Component {
             }
             else{
                 return <div className="p-1">
-                <Link to="/productDetails">
+               <Link to={"productDetails/"+productList.product_code}>
                 <Card className="card image-box ">
                     <img src={productList.image}/>
                     <Card.Body>
@@ -120,9 +123,14 @@ class NewArrival extends Component {
                     </a>
                 </h4>
                 <h6 className="section-sub-title pb-3">Some Of Our Exclusive Collection, You May Like</h6>
+
+                    <NewArrivalPlaceholder isLoading={this.state.isLoading}/>
+
+                    <div className={this.state.MainDiv}>
                     <Slider  ref={c=>(this.slider=c)}   {...settings}>
                         {ListView}
                     </Slider>
+                    </div>
 
 
             </Container>

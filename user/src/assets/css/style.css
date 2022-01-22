@@ -4,7 +4,6 @@
 @import "common.css";
 @import "card.css";
 @import "footer.css";
-@import "animate.min.css";
 
 @import "megaMenu.css";
 @import "megaMenuMobile.css";
@@ -21,5 +20,5 @@
 @import "ProductDetails.css";
 @import "cart.css";
 
-
+@import "breadcrumb.css";
 @import "responsive.css";

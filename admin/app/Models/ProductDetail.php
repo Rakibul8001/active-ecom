@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class ProductDetail extends Model
 {
-    public $table='products';
+    public $table='product_details';
     public $primaryKey='id';
     public $incrementing=true;
     public $keyType='int';

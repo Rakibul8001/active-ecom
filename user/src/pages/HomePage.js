@@ -20,7 +20,6 @@ class HomePage extends Component {
     componentDidMount() {
         //call visitor fun when load homepage
         this.GetVisitorDetails();
-
         window.scroll(0,0)
     }
 

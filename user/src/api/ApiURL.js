@@ -14,6 +14,12 @@ class ApiURL{
     static productListByCategory(Category){
         return this.BaseURL+"productListByCategory/"+Category
     }
+
+    static  SendSliderInfo=this.BaseURL+"SendSliderInfo";
+
+    static ProductDetails(ProductCode){
+        return this.BaseURL+"ProductDetails/"+ProductCode
+    }
 }
 
 export default ApiURL;
