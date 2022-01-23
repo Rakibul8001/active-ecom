@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteInfoController;
 use App\Http\Controllers\ContactListController;
 use App\Http\Controllers\VisitorListController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\CategoryDetailsController;
 
@@ -24,3 +25,4 @@ Route::get('/productListByCategory/{Category}',[ProductController::class,'produc
 Route::get('/ProductDetails/{code}',[ProductDetailController::class,'ProductDetails']);
 
 Route::get('/SendSliderInfo',[SliderController::class,'SendSliderInfo']);
+Route::get('/NotificationHistory',[NotificationController::class,'NotificationHistory']);
