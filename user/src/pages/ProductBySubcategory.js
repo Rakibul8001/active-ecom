@@ -5,6 +5,7 @@ import FooterDesktop from "../components/common/FooterDesktop";
 import FooterMobile from "../components/common/FooterMobile";
 import axios from 'axios';
 import ApiURL from '../api/ApiURL';
+import ProductListLoader from "../components/placeholder/ProductListLoader";
 import ListBySubcategory from '../components/ProductDetails/ListBySubcategory';
 
 export default class ProductBySubcategory extends Component {
@@ -13,7 +14,9 @@ export default class ProductBySubcategory extends Component {
     this.state={
         Category:match.params.Category,
         SubCategory:match.params.SubCategory,
-        ProductData:[]
+        ProductData:[],
+        isLoading:"",
+        MainDiv:"d-none"
     }
 }
 
@@ -22,14 +25,35 @@ componentDidMount() {
     window.scroll(0,0)
 
     axios.get(ApiURL.productListBySubcategory(this.state.Category, this.state.SubCategory)).then(response =>{
-        this.setState({ProductData:response.data});
+        this.setState({ProductData:response.data, isLoading:'d-none', MainDiv:""});
     }).catch(error=>{
 
     });
 }
 
 render() {
-  return <Fragment>
+    if(this.state.MainDiv == "d-none"){
+        return <Fragment>
+        <div className="Desktop">
+            <NavMenuDesktop/>
+        </div>
+        <div className="Mobile">
+            <NavMenuMobile/>
+        </div>
+
+        <ProductListLoader isLoading={this.state.isLoading} />
+
+        <div className="Desktop">
+            <FooterDesktop/>
+        </div>
+        <div className="Mobile">
+            <FooterMobile/>
+        </div>
+
+    </Fragment>
+    }
+    else{
+        return <Fragment>
           <div className="Desktop">
               <NavMenuDesktop/>
           </div>
@@ -37,7 +61,7 @@ render() {
               <NavMenuMobile/>
           </div>
 
-          <ListBySubcategory SubCategory={this.state.SubCategory} ProductData={this.state.ProductData} />
+          <ListBySubcategory Category={this.state.Category} SubCategory={this.state.SubCategory} ProductData={this.state.ProductData} />
 
           <div className="Desktop">
               <FooterDesktop/>
@@ -47,5 +71,6 @@ render() {
           </div>
 
       </Fragment>
+    }
   }
 }
