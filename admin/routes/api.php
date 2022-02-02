@@ -10,8 +10,7 @@ use App\Http\Controllers\VisitorListController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\CategoryDetailsController;
-
-
+use App\Http\Controllers\LoginController;
 
 Route::get('/SendVisitorDetails',[VisitorListController::class,'SendVisitorDetails']);
 Route::post('/SendContactDetails',[ContactListController::class,'SendContactDetails']);
@@ -28,3 +27,5 @@ Route::get('/SendSliderInfo',[SliderController::class,'SendSliderInfo']);
 Route::get('/NotificationHistory',[NotificationController::class,'NotificationHistory']);
 //product search
 Route::get('/productListBySearch/{key}',[ProductController::class,'ProductBySearch']);
+//send otp when login
+Route::post('/CreateOtp',[LoginController::class,'CreateOtp']);
