@@ -3,7 +3,6 @@ import NavMenuDesktop from "../components/common/NavMenuDesktop";
 import NavMenuMobile from "../components/common/NavMenuMobile";
 import FooterDesktop from "../components/common/FooterDesktop";
 import FooterMobile from "../components/common/FooterMobile";
-import SuggestedProducts from "../components/ProductDetails/SuggestedProducts";
 import ProductDetails from "../components/ProductDetails/ProductDetails";
 import ProductDetailsPlaceholder from "../components/placeholder/ProductDetailsPlaceholder";
 import axios from 'axios';

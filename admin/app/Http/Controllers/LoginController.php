@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
-    function CreateOtp(Request $request){
+    public function CreateOtp(Request $request){
 
-        $mobile= $request->mobile;
+        $mobile= $request->input('mobile');
         $settings=Setting::all('ssl_wireless_sms_api_token', 'ssl_wireless_sms_sid', 'ssl_wireless_sms_domain');
 
         $six_digit_random_number = mt_rand(100000, 999999);
@@ -57,18 +57,31 @@ class LoginController extends Controller
                 'created_time'=>$created_time,
             ]);
 
-            return $result;
-
-            //status of the request
-            //echo $array['status'] ;
-
-            //status message of the request
-            // echo $array['message'] ;
+            return response()->json([
+                'status'=>200, 
+                'data'=>$result
+            ]);
         }
         else{
             return 0;
         }
-
-
     }
+
+    //otp verification
+    public function otp_verification(Request $request)
+    {
+        $otp = $request->input('otp');
+        $mobile=$request->input('mobile');
+
+        $otpCount = Otp::where('otp',$otp)->where('mobile',$mobile)->count();
+
+        if($otpCount > 0){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+
 }

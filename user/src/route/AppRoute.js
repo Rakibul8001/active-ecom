@@ -14,6 +14,7 @@ import CartPage from "../pages/CartPage";
 import ProductByCategory from "../pages/ProductByCategory";
 import ProductBySubcategory from "../pages/ProductBySubcategory";
 import SearchPage from "../pages/SearchPage";
+import OtpVerificationPage from '../pages/OtpVerificationPage';
 
 
 class AppRoute extends Component {
@@ -38,6 +39,8 @@ class AppRoute extends Component {
                     <Route exact path="/ProductByCategory/:Category"  render={(props)=> <ProductByCategory {...props} key={Date.now()}/>} />
                     <Route exact path="/ProductBySubcategory/:Category/:SubCategory"  render={(props)=> <ProductBySubcategory {...props} key={Date.now()}/>} />
                     <Route exact path="/productListBySearch/:SearchKey"  render={(props)=> <SearchPage {...props} key={Date.now()}/>} />
+
+                    <Route exact path="/otp-verification/:mobile"  render={(props)=> <OtpVerificationPage {...props} key={Date.now()}/>} />
                 </Switch>
 
             </Fragment>

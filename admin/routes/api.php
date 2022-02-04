@@ -29,3 +29,4 @@ Route::get('/NotificationHistory',[NotificationController::class,'NotificationHi
 Route::get('/productListBySearch/{key}',[ProductController::class,'ProductBySearch']);
 //send otp when login
 Route::post('/CreateOtp',[LoginController::class,'CreateOtp']);
+Route::post('/otp-verification',[LoginController::class,'otp_verification']);

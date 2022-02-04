@@ -27,6 +27,10 @@ class ApiURL{
     static productListBySearch(SearchKey){
         return this.BaseURL+"productListBySearch/"+SearchKey
     }
+    //send otp
+    static CreateOtp = this.BaseURL+"CreateOtp";
+    //otp verification
+    static otpVerification = this.BaseURL+"otp-verification";
 }
 
 export default ApiURL;
