@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import axios from 'axios';
 import ApiURL from '../../api/ApiURL';
+import SessionHelper from '../SessionHelper/SessionHelper';
 
 class Refund extends Component {
     constructor(){
@@ -17,7 +18,8 @@ class Refund extends Component {
     }
 
     componentDidMount(){
-        let SiteInfoTerms = sessionStorage.getItem("SiteInfoTerms");
+        //get session
+        let SiteInfoTerms = SessionHelper.GetRefun();
 
         if(SiteInfoTerms == null){
             axios.get(ApiURL.SendSiteInfo).then(response=>{
@@ -25,7 +27,8 @@ class Refund extends Component {
                 if(StatusCode == 200){
                     let JSONData = response.data[0]['terms'];
                     this.setState({terms:JSONData, loaderDiv:"d-none",mainDiv:""});
-                    sessionStorage.setItem("SiteInfoTerms",JSONData);
+                    //set session
+                    SessionHelper.SetRefund(JSONData);
                 }
                 else{
                     toast.error("Something went wrong!");

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import axios from 'axios';
 import ApiURL from '../../api/ApiURL';
+import SessionHelper from '../SessionHelper/SessionHelper';
 
 class Purchase extends Component {
 
@@ -18,7 +19,7 @@ class Purchase extends Component {
     }
 
     componentDidMount(){
-        let SiteInfoPurchase = sessionStorage.getItem("SiteInfoPurchase");
+        let SiteInfoPurchase = SessionHelper.GetSiteInfoPurchase();
 
         if(SiteInfoPurchase == null){
             axios.get(ApiURL.SendSiteInfo).then(response=>{
@@ -26,7 +27,7 @@ class Purchase extends Component {
                 if(StatusCode == 200){
                     let JSONData = response.data[0]['purchase_guide'];
                     this.setState({purchase_guide:JSONData, loaderDiv:"d-none",mainDiv:""});
-                    sessionStorage.setItem("SiteInfoPurchase",JSONData);
+                    SessionHelper.SetSiteInfoPurchase(JSONData);
                 }
                 else{
                     toast.error("Something went wrong!");

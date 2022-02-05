@@ -7,6 +7,7 @@ import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from
 import ApiURL from '../../api/ApiURL';
 import axios from 'axios';
 import HtmlParser from 'react-html-parser';
+import SessionHelper from '../SessionHelper/SessionHelper';
 
 class FooterDesktop extends Component {
     constructor(){
@@ -27,7 +28,7 @@ class FooterDesktop extends Component {
 
     componentDidMount(){
         // store data into sessionStorage
-        let SiteInfoFooter = sessionStorage.getItem("SiteInfoFooter");
+        let SiteInfoFooter = SessionHelper.GetSiteInfoFooter();
 
         if(SiteInfoFooter == null){
             //first time api call
@@ -47,7 +48,7 @@ class FooterDesktop extends Component {
                         loaderDiv:'d-none', 
                         mainDiv:''
                     });
-                    sessionStorage.setItem("SiteInfoFooter",JSON.stringify(JSONData));
+                    SessionHelper.SetSiteInfoFooter(JSONData);
                 }
                 else{
                     toast.error("Something went wrong!");

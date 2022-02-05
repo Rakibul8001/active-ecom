@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import axios from 'axios';
 import ApiURL from '../../api/ApiURL';
+import SessionHelper from '../SessionHelper/SessionHelper';
 
 class Policy extends Component {
     constructor(){
@@ -17,7 +18,7 @@ class Policy extends Component {
     }
 
     componentDidMount(){
-        let SiteInfoPolicy = sessionStorage.getItem("SiteInfoPolicy");
+        let SiteInfoPolicy = SessionHelper.GetPolicy();
 
         if(SiteInfoPolicy == null){
             axios.get(ApiURL.SendSiteInfo).then(response=>{
@@ -25,7 +26,7 @@ class Policy extends Component {
                 if(StatusCode == 200){
                     let JSONData = response.data[0]['policy'];
                     this.setState({policy:JSONData, loaderDiv:"d-none",mainDiv:""});
-                    sessionStorage.setItem("SiteInfoPolicy",JSONData);
+                    SessionHelper.SetPolicy(JSONData);
                 }
                 else{
                     toast.error("Something went wrong!");

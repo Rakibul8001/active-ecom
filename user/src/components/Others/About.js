@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import ApiURL from '../../api/ApiURL';
+import SessionHelper from '../SessionHelper/SessionHelper';
 class About extends Component {
 
     constructor(){
@@ -18,7 +19,7 @@ class About extends Component {
 
     componentDidMount(){
         // store data into sessionStorage
-        let SiteInfoAbout = sessionStorage.getItem("SiteInfoAbout");
+        let SiteInfoAbout = SessionHelper.GetSiteInfoAbout();
 
         if(SiteInfoAbout == null){
             //first time api call
@@ -27,7 +28,7 @@ class About extends Component {
                 if(StatusCode == 200){
                     let JSONData = (response.data)[0]['about'];
                     this.setState({about:JSONData, loaderDiv:'d-none', mainDiv:''});
-                    sessionStorage.setItem("SiteInfoAbout",JSONData);
+                    SessionHelper.SetSiteInfoAbout(JSONData);
                 }
                 else{
                     toast.error("Something went wrong!");

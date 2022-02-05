@@ -5,6 +5,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import ApiURL from '../../api/ApiURL';
+import { Redirect } from 'react-router';
+import SessionHelper from '../SessionHelper/SessionHelper';
 
 export default class OtpVerification extends Component {
 
@@ -43,6 +45,9 @@ export default class OtpVerification extends Component {
 
         if(response.status == 200 && response.data == 1){
           toast.success("OTP Verification Successful");
+          //set mobile on session
+          SessionHelper.SetUserMobile(mobile);
+          this.setState({redirect:true});
         }
         else if(response.status == 200 && response.data == 0){
           toast.error("Invalid OTP, Try Again Valid OTP");
@@ -60,7 +65,9 @@ export default class OtpVerification extends Component {
   }
 
   onRedirect(){
-
+    if(this.state.redirect === true){
+      return <Redirect to="/" />
+    }
   }
 
   componentDidMount(){
