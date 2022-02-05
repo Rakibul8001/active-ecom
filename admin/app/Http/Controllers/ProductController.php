@@ -38,4 +38,10 @@ class ProductController extends Controller
 
         return $productList;
     }
+
+    //Similar Products
+    public function SimilarProducts(Request $request){
+        $products = Product::where('subcategory',$request->subcategory)->limit(12)->get();
+        return $products;
+    }
 }

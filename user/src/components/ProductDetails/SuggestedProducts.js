@@ -1,103 +1,88 @@
 import React, {Component, Fragment} from 'react';
 import {Container,Row,Col,Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import ApiURL from '../../api/ApiURL';
+import axios from 'axios';
 class SuggestedProducts extends Component {
+
+    constructor(){
+        super();
+        this.state={
+            ProductData:[]
+        }
+    }
+
+    componentDidMount() {
+        let subcategory = this.props.subcategory;
+        axios.get(ApiURL.similarProducts(subcategory)).then(response =>{
+            this.setState({ProductData:response.data});
+        }).catch(error=>{
+
+        });
+    }
+
+
     render() {
-        return (
-            <Fragment>
-                <Container className="text-center BetweenTwoSection">
-                    <h4 className="section-title">YOU MAY LIKE</h4>
-                    <h6 className="section-sub-title pb-3">Some Of Our Exclusive Collection, You May Like</h6>
-                    <Row>
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Link to="/productDetails">
-                                <Card className="card w-100 image-box ">
-                                    <img src="Images/product2.jpg"/>
-                                    <Card.Body>
-                                        <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                        <p className="product-price-on-card">Price: 3000TK</p>
-                                    </Card.Body>
-                                </Card>
-                            </Link>
 
-                        </Col>
+        const myList = this.state.ProductData;
 
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+        if(myList.length > 0){
+            const ListView = myList.map((productList,i)=>{
+                if(productList.special_price == 'NA'){
+                    return <Col className="p-1" key={i.toString()} xl={2} lg={2} md={2} sm={4} xs={6} >
+                    <Link to={"/productDetails/"+productList.product_code}>
+                    <Card className="card w-100 image-box ">
+                        <img src={productList.image}/>
+                        <Card.Body>
+                            <h5 className="product-name-on-card">{productList.title}</h5>
+                            <p className="product-price-on-card">Price: {productList.price}</p>
+                        </Card.Body>
+                    </Card>
+                    </Link>
+        
+                </Col>
+                }
+                else{
+                    return <Col className="p-1" key={i.toString()} xl={2} lg={2} md={2} sm={4} xs={6} >
+                    <Link to={"/productDetails/"+productList.product_code}>
+                    <Card className="card w-100 image-box ">
+                        <img src={productList.image}/>
+                        <Card.Body>
+                            <h5 className="product-name-on-card">{productList.title}</h5>
+                            <p className="product-price-on-card">
+                                Price: <strike className="text-secondary">{productList.price}</strike> {productList.special_price}
+                            </p>
+                        </Card.Body>
+                    </Card>
+                    </Link>
+        
+                </Col>
+                }
+        
+            });
 
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
+            return (
+                <Fragment>
+                    <Container fluid={true} className="text-center BetweenTwoSection">
+                        <h4 className="section-title">YOU MAY LIKE</h4>
+                        <h6 className="section-sub-title pb-3">Some Of Our Exclusive Collection, You May Like</h6>
+                        <Row>
+                            {ListView}
+                        </Row>
+                    </Container>
+    
+                </Fragment>
+            );
 
 
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                        <Col className="p-1" key={1} xl={3} lg={3} md={3} sm={6} xs={6} >
-                            <Card className="card  w-100  image-box ">
-                                <img src="Images/product1.jpg"/>
-                                <Card.Body>
-                                    <h5 className="product-name-on-card">ASUS TUF A15 FA506IU Ryzen 7 4800H GTX</h5>
-                                    <p className="product-price-on-card">Price: 3000TK</p>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-
-                    </Row>
-                </Container>
-
-            </Fragment>
-        );
+        }
+        else{
+            return (
+                <Fragment>
+    
+                </Fragment>
+            );
+        }
     }
 }
 

@@ -11,7 +11,7 @@ export default class ListByCategory extends Component {
     const ListView = myList.map((productList,i)=>{
         if(productList.special_price == 'NA'){
             return <Col className="p-1" key={i.toString()} xl={2} lg={2} md={2} sm={4} xs={6} >
-            <Link to="/productDetails">
+            <Link to={"/productDetails/"+productList.product_code}>
             <Card className="card w-100 image-box ">
                 <img src={productList.image}/>
                 <Card.Body>
@@ -25,7 +25,7 @@ export default class ListByCategory extends Component {
         }
         else{
             return <Col className="p-1" key={i.toString()} xl={2} lg={2} md={2} sm={4} xs={6} >
-            <Link to="/productDetails">
+            <Link to={"/productDetails/"+productList.product_code}>
             <Card className="card w-100 image-box ">
                 <img src={productList.image}/>
                 <Card.Body>

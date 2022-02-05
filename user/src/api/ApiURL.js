@@ -31,6 +31,10 @@ class ApiURL{
     static CreateOtp = this.BaseURL+"CreateOtp";
     //otp verification
     static otpVerification = this.BaseURL+"otp-verification";
+    //Similar product by subcategory
+    static similarProducts(subcategory){
+        return this.BaseURL+"similarProducts/"+subcategory;
+    }
 }
 
 export default ApiURL;

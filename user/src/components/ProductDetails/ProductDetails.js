@@ -2,10 +2,14 @@ import React, {Component,Fragment} from 'react';
 import {Container,Row,Col} from "react-bootstrap";
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
+import SuggestedProducts from './SuggestedProducts';
 
 class ProductDetails extends Component {
     constructor() {
         super();
+        this.state={
+            PreviewImg:"0"
+        }
     }
 
     PriceOption(special_price,price){
@@ -24,6 +28,11 @@ class ProductDetails extends Component {
   
     }
 
+    PreviewImg=(event)=>{
+        let PreviewImg = event.target.getAttribute("src");
+        this.setState({PreviewImg:PreviewImg});
+    }
+
     render() {
 
         let Product = this.props.ProductData;
@@ -32,6 +41,12 @@ class ProductDetails extends Component {
         let special_price =Product['product'][0]['special_price'];
         let color =Product['product_details'][0]['color'];
         let size =Product['product_details'][0]['size'];
+        let subcategory = Product['product'][0]['subcategory'];
+
+        //setstate previewimg 
+        if(this.state.PreviewImg === "0"){
+            this.setState({PreviewImg:Product['product_details'][0]['img1']});
+        }
 
         var ColorDiv="d-none"
         if(color!="NA"){
@@ -68,25 +83,25 @@ class ProductDetails extends Component {
                                 <Col className="p-3" md={6} lg={6} sm={12} xs={12}>
                                     
                                     <InnerImageZoom 
-                                        src={Product['product'][0]['image']} 
-                                        zoomSrc={Product['product'][0]['image']} 
+                                        src={this.state.PreviewImg} 
+                                        zoomSrc={this.state.PreviewImg} 
                                         zoomScale={1.8}
                                         zoomType={"hover"}
                                     />
 
                                     <Container  className="my-3">
                                         <Row>
-                                            <Col className="p-0 m-0"  md={3} lg={3} sm={3} xs={3}>
-                                                <img className="w-100" src={Product['product_details'][0]['img1']}/>
+                                            <Col className="p-0 image-box m-0"  md={3} lg={3} sm={3} xs={3}>
+                                                <img className="w-100 Product-sm-img" onClick={this.PreviewImg} src={Product['product_details'][0]['img1']}/>
                                             </Col>
-                                            <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                                                <img className="w-100" src={Product['product_details'][0]['img2']} />
+                                            <Col className="p-0 image-box m-0" md={3} lg={3} sm={3} xs={3}>
+                                                <img className="w-100 Product-sm-img" onClick={this.PreviewImg} src={Product['product_details'][0]['img2']} />
                                             </Col>
-                                            <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                                                <img className="w-100" src={Product['product_details'][0]['img3']} />
+                                            <Col className="p-0 image-box m-0" md={3} lg={3} sm={3} xs={3}>
+                                                <img className="w-100 Product-sm-img" onClick={this.PreviewImg} src={Product['product_details'][0]['img3']} />
                                             </Col>
-                                            <Col className="p-0 m-0" md={3} lg={3} sm={3} xs={3}>
-                                                <img className="w-100" src={Product['product_details'][0]['img4']}/>
+                                            <Col className="p-0 image-box m-0" md={3} lg={3} sm={3} xs={3}>
+                                                <img className="w-100 Product-sm-img" onClick={this.PreviewImg} src={Product['product_details'][0]['img4']}/>
                                             </Col>
                                         </Row>
                                     </Container>
@@ -161,6 +176,9 @@ class ProductDetails extends Component {
                         </Col>
                     </Row>
                 </Container>
+
+                {/* Suggested Products */}
+                <SuggestedProducts subcategory={subcategory} />
 
             </Fragment>
         );

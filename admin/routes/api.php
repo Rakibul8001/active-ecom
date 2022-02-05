@@ -20,6 +20,7 @@ Route::get('/SendCategoryDetails',[CategoryDetailsController::class,'SendCategor
 Route::get('/productListByRemark/{remark}',[ProductController::class,'productListByRemark']);
 Route::get('/productListBySubcategory/{Category}/{Subcategory}',[ProductController::class,'productListBySubcategory']);
 Route::get('/productListByCategory/{Category}',[ProductController::class,'productListByCategory']);
+Route::get('/similarProducts/{subcategory}',[ProductController::class,'SimilarProducts']);
 
 Route::get('/ProductDetails/{code}',[ProductDetailController::class,'ProductDetails']);
 
