@@ -13,6 +13,10 @@ class ProductDetails extends Component {
         }
     }
 
+    componentDidMount(){
+        window.scroll(0,0)
+    }
+
     PriceOption(special_price,price){
         if(special_price==="NA"){
             return(
@@ -43,6 +47,7 @@ class ProductDetails extends Component {
         let color =Product['product_details'][0]['color'];
         let size =Product['product_details'][0]['size'];
         let subcategory = Product['product'][0]['subcategory'];
+        let product_code = Product['product'][0]['product_code'];
 
         //setstate previewimg 
         if(this.state.PreviewImg === "0"){
@@ -161,9 +166,8 @@ class ProductDetails extends Component {
                                 </Col>
 
                                 <Col className="" md={6} lg={6} sm={12} xs={12}>
-                                    <h6 className="mt-2">REVIEWS</h6>
 
-                                    <ReviewList/>
+                                    <ReviewList product_code={product_code}/>
 
                                 </Col>
                             </Row>

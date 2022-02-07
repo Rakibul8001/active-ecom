@@ -11,6 +11,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\CategoryDetailsController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/SendVisitorDetails',[VisitorListController::class,'SendVisitorDetails']);
 Route::post('/SendContactDetails',[ContactListController::class,'SendContactDetails']);
@@ -31,3 +32,5 @@ Route::get('/productListBySearch/{key}',[ProductController::class,'ProductBySear
 //send otp when login
 Route::post('/CreateOtp',[LoginController::class,'CreateOtp']);
 Route::post('/otp-verification',[LoginController::class,'otp_verification']);
+//Reviewlist
+Route::get('/review-list/{code}',[ReviewController::class,'ReviewList']);

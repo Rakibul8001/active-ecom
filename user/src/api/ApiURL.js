@@ -35,6 +35,10 @@ class ApiURL{
     static similarProducts(subcategory){
         return this.BaseURL+"similarProducts/"+subcategory;
     }
+    //ReviewList
+    static ReviewList(code){
+        return this.BaseURL+"review-list/"+code;
+    }
 }
 
 export default ApiURL;
