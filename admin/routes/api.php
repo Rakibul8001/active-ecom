@@ -43,3 +43,5 @@ Route::post('/addToCart',[CartController::class,'AddToCart']);
 Route::get('/cartcount/{mobile}',[CartController::class,'CartCount']);
 //Add To Favourite List
 Route::get('add-to-favourite/{code}/{mobile}',[FavouriteController::class,'AddToFav']);
+Route::get('favourite-list/{mobile}',[FavouriteController::class,'FavList']);
+

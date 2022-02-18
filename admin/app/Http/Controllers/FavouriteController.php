@@ -24,4 +24,12 @@ class FavouriteController extends Controller
 
         return $result;
     }
+
+    public function FavList(Request $request)
+    {
+        $mobile = $request->mobile;
+        $result = Favourite::where('mobile',$mobile)->get();
+        
+        return $result;
+    }
 }

@@ -49,6 +49,9 @@ class ApiURL{
     static AddToFavourite(code,mobile){
         return this.BaseURL+"add-to-favourite/"+code+"/"+mobile;
     }
+    static FavList(mobile){
+        return this.BaseURL+"favourite-list/"+mobile;
+    }
 }
 
 export default ApiURL;
