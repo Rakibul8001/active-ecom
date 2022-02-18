@@ -25,7 +25,8 @@ class CreateProductsTable extends Migration
             $table->string('brand');
             $table->string('star');
             $table->string('product_code');
-            $table->timestamps();
+            $table->string('shop_name');
+            $table->string('shop_code');
         });
     }
 

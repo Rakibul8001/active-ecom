@@ -39,6 +39,16 @@ class ApiURL{
     static ReviewList(code){
         return this.BaseURL+"review-list/"+code;
     }
+    //addToCart
+    static addToCartUrl = this.BaseURL+"addToCart";
+    //Cart Count
+    static CartCount(mobile){
+        return this.BaseURL+"cartcount/"+mobile;
+    }
+    //Add to favourite
+    static AddToFavourite(code,mobile){
+        return this.BaseURL+"add-to-favourite/"+code+"/"+mobile;
+    }
 }
 
 export default ApiURL;

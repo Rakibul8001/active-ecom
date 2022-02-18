@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Col} from 'react-bootstrap';
 import ApiURL from '../../api/ApiURL';
 import axios from 'axios';
 
@@ -27,10 +28,10 @@ export default class ReviewList extends Component {
     if(MyReview.length > 0){
     const viewReview = MyReview.map((reviewList,i)=>{
         return (
-          <div>
-                <p className=" p-0 m-0"><span className="Review-Title">{reviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> </span> </p>
+          <Col key={i.toString()}>
+                <p className=" p-0 m-0" ><span className="Review-Title">{reviewList.reviewer_name}</span> <span className="text-success"><i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> <i className="fa fa-star"></i> </span> </p>
                 <p>{reviewList.reviewer_comment}</p>
-          </div>
+          </Col>
         );
     });
 

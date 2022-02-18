@@ -1,15 +1,29 @@
+import axios from 'axios';
 import React, {Component,Fragment} from 'react';
 import {Container,Row,Col} from "react-bootstrap";
 import InnerImageZoom from 'react-inner-image-zoom';
 import 'react-inner-image-zoom/lib/InnerImageZoom/styles.css';
+import ApiURL from '../../api/ApiURL';
 import ReviewList from './ReviewList';
 import SuggestedProducts from './SuggestedProducts';
+import { ToastContainer, toast } from 'react-toastify';
+import SessionHelper from '../SessionHelper/SessionHelper';
+import { Redirect } from 'react-router';
 
 class ProductDetails extends Component {
     constructor() {
         super();
         this.state={
-            PreviewImg:"0"
+            PreviewImg:"0",
+            isColor:null,
+            isSize:null,
+            color:"",
+            size:"",
+            quantity:"",
+            productCode:null,
+            AddToCart:"Add To Cart",
+            PageRefresh:false,
+            addToFav:"Favourite"
         }
     }
 
@@ -26,7 +40,7 @@ class ProductDetails extends Component {
         else{
             return(
                 <p className="product-price-on-card">
-                    Price: <strike class="text-secondary">{ price}TK</strike>  { special_price} TK
+                    Price: <strike className="text-secondary">{ price}TK</strike>  { special_price} TK
                 </p>
             )
         }
@@ -38,20 +52,113 @@ class ProductDetails extends Component {
         this.setState({PreviewImg:PreviewImg});
     }
 
-    render() {
+    //AddToCart
+    addToCartButton=()=>{
+        if(SessionHelper.GetUserMobile() !=null){
+            let isColor = this.state.isColor;
+            let isSize = this.state.isSize;
+            let color = this.state.color;
+            let size = this.state.size;
+            let quantity = this.state.quantity;
+            let mobile = SessionHelper.GetUserMobile();
+            let product_code=this.state.productCode;
+    
+            if(isColor === "YES" && color.length === 0){
+                toast.error("Please select product color!");
+            }
+            else if(isSize === "YES" && size.length ===0){
+                toast.error("Please select Product size!");
+            }
+            else if(quantity.length === 0){
+                toast.error("Please select quantity!");
+            }
+            else{
+                let myFormData = new FormData();
+                myFormData.append("color",color);
+                myFormData.append("size",size);
+                myFormData.append("quantity",quantity);
+                myFormData.append("product_code",product_code);
+                myFormData.append("mobile",mobile);
+        
+                this.setState({AddToCart:"Cart Adding..."});
+                axios.post(ApiURL.addToCartUrl,myFormData).then(res=>{
+                    if(res.data == 1){
+                        this.setState({AddToCart:"Add To Cart", PageRefresh:true});
+                        toast.success("Cart Added!")
+                    }
+                    else{
+                        this.setState({AddToCart:"Add To Cart"});
+                        toast.error("Request Failed! Try again");
+                    }
+                }).catch(err=>{
+                    this.setState({AddToCart:"Add To Cart"});
+                    toast.error(err);
+                });
+            }
+        }
+        else{
+            toast.error("User mobile not found!");
+        }
+
+    }
+
+    colorOnChange=(e)=>{
+        let color = e.target.value;
+        this.setState({color:color});
+    }
+    sizeOnChange=(e)=>{
+        let size = e.target.value;
+        this.setState({size:size});
+    }
+    quantityOnChange=(e)=>{
+        let quantity = e.target.value;
+        this.setState({quantity:quantity});
+    }
+
+    //page refresh
+    RefreshPage=()=>{
+        if(this.state.PageRefresh === true){
+            //refresh current page
+            window.location.reload();
+        }
+
+    }
+
+    //addToFav
+    addToFavButton =()=>{
+        let mobile = SessionHelper.GetUserMobile();
+        let product_code=this.state.productCode;
+
+        this.setState({addToFav:"Adding..."});
+        axios.get(ApiURL.AddToFavourite(product_code,mobile)).then(res=>{
+            if(res.data === 1){
+                this.setState({addToFav:"Favourite"});
+                toast.success("Added To Favourite List!")
+            }
+            else{
+                this.setState({addToFav:"Favourite"});
+                toast.error("Request Failed! Try again");
+            }
+        }).catch(err=>{
+            this.setState({addToFav:"Favourite"});
+            toast.error("Request Failed! Try again");
+        });
+    }
+
+    render() {  
 
         let Product = this.props.ProductData;
-
         let price =Product['product'][0]['price'];
         let special_price =Product['product'][0]['special_price'];
         let color =Product['product_details'][0]['color'];
         let size =Product['product_details'][0]['size'];
         let subcategory = Product['product'][0]['subcategory'];
         let product_code = Product['product'][0]['product_code'];
+        let img1 = Product['product_details'][0]['img1'];
 
         //setstate previewimg 
         if(this.state.PreviewImg === "0"){
-            this.setState({PreviewImg:Product['product_details'][0]['img1']});
+            this.setState({PreviewImg:img1});
         }
 
         var ColorDiv="d-none"
@@ -78,6 +185,28 @@ class ProductDetails extends Component {
         }
         else{
             SizeDiv="d-none"
+        }
+
+        if(this.state.isSize===null){
+            if(size!=="NA"){
+                this.setState({isSize:"YES"})
+            }
+            else{
+                this.setState({isSize:"NO"})
+            }
+        }
+
+        if(this.state.isColor===null){
+            if(color!=="NA"){
+                this.setState({isColor:"YES"})
+            }
+            else{
+                this.setState({isColor:"NO"})
+            }
+        }
+
+        if(this.state.productCode === null){
+            this.setState({productCode:product_code});
         }
 
         return (
@@ -120,7 +249,7 @@ class ProductDetails extends Component {
 
                                     <div className={ColorDiv}>
                                         <h6 className="mt-2">Choose Color</h6>
-                                        <select className="form-control form-select">
+                                        <select onChange={this.colorOnChange} className="form-control form-select">
                                             <option value="">Choose Color</option>
                                             {ColorOption}
                                         </select>
@@ -128,7 +257,7 @@ class ProductDetails extends Component {
 
                                     <div className={SizeDiv}>
                                         <h6 className="mt-2">Choose Size</h6>
-                                        <select className="form-control form-select">
+                                        <select onChange={this.sizeOnChange} className="form-control form-select">
                                             <option value="">Choose Size</option>
                                             {SizeOption}
                                         </select>
@@ -136,7 +265,7 @@ class ProductDetails extends Component {
 
                                     <div className="">
                                         <h6 className="mt-2">Choose Quantity</h6>
-                                        <select className="form-control form-select">
+                                        <select onChange={this.quantityOnChange} className="form-control form-select">
                                             <option value="">Choose Quantity</option>
                                             <option value="01">01</option>
                                             <option value="02">02</option>
@@ -152,9 +281,9 @@ class ProductDetails extends Component {
                                     </div>
 
                                     <div className="input-group mt-3">
-                                        <button className="btn site-btn m-1 "> <i className="fa fa-shopping-cart"></i>  Add To Cart</button>
+                                        <button onClick={this.addToCartButton} className="btn site-btn m-1 "> <i className="fa fa-shopping-cart"></i>{this.state.AddToCart}</button>
                                         <button className="btn btn-primary m-1"> <i className="fa fa-car"></i> Order Now</button>
-                                        <button className="btn btn-primary m-1"> <i className="fa fa-heart"></i> Favourite</button>
+                                        <button onClick={this.addToFavButton} className="btn btn-primary m-1"> <i className="fa fa-heart"></i>{this.state.addToFav}</button>
                                     </div>
                                 </Col>
                             </Row>
@@ -174,10 +303,25 @@ class ProductDetails extends Component {
 
                         </Col>
                     </Row>
+
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+
                 </Container>
 
                 {/* Suggested Products */}
                 <SuggestedProducts subcategory={subcategory} />
+                {/* Page Refresh rendering */}
+                {this.RefreshPage()}
 
             </Fragment>
         );

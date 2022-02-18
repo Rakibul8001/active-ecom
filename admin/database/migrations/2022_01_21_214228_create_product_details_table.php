@@ -24,7 +24,6 @@ class CreateProductDetailsTable extends Migration
             $table->string('color');
             $table->string('size');
             $table->text('details');
-            $table->timestamps();
         });
     }
 

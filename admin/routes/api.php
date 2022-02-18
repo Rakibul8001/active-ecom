@@ -1,7 +1,12 @@
 <?php
 
+use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SiteInfoController;
@@ -10,8 +15,7 @@ use App\Http\Controllers\VisitorListController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductDetailController;
 use App\Http\Controllers\CategoryDetailsController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\FavouriteController;
 
 Route::get('/SendVisitorDetails',[VisitorListController::class,'SendVisitorDetails']);
 Route::post('/SendContactDetails',[ContactListController::class,'SendContactDetails']);
@@ -34,3 +38,8 @@ Route::post('/CreateOtp',[LoginController::class,'CreateOtp']);
 Route::post('/otp-verification',[LoginController::class,'otp_verification']);
 //Reviewlist
 Route::get('/review-list/{code}',[ReviewController::class,'ReviewList']);
+//addToCart
+Route::post('/addToCart',[CartController::class,'AddToCart']);
+Route::get('/cartcount/{mobile}',[CartController::class,'CartCount']);
+//Add To Favourite List
+Route::get('add-to-favourite/{code}/{mobile}',[FavouriteController::class,'AddToFav']);

@@ -3,6 +3,8 @@ import  {Container,Nav,Navbar, Row, Col, Button, InputGroup, Dropdown} from "rea
 import {Link} from "react-router-dom";
 import {Redirect} from "react-router";
 import SessionHelper from '../SessionHelper/SessionHelper';
+import axios from 'axios';
+import ApiURL from '../../api/ApiURL';
 
 class NavMenuDesktop extends Component {
 
@@ -11,12 +13,24 @@ class NavMenuDesktop extends Component {
         this.state={
             SearchKey:"",
             SearchRedirectStatus:false,
-            HomeRedirectStatus:false
+            HomeRedirectStatus:false,
+            CartCount:0,
+
         }
         //bind functions, if I use es6 function no need bind, as like onLogout function
         this.searchOnChange = this.searchOnChange.bind(this);
         this.searchOnClick = this.searchOnClick.bind(this);
         this.searchRedirect = this.searchRedirect.bind(this);
+    }
+
+    //Cart Count
+    componentDidMount(){
+        axios.get(ApiURL.CartCount(SessionHelper.GetUserMobile())).then(res=>{
+            this.setState({CartCount:res.data});
+
+        }).catch(error=>{
+
+        });
     }
 
     //searchOnChange fun
@@ -57,7 +71,7 @@ class NavMenuDesktop extends Component {
                     <Row>
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
                             <Link to="/" className="btn"> <img className="nav-logo" src="images/logo.png"/></Link>
-                            <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> 4 items </Link>
+                            <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> {this.state.CartCount} items </Link>
                             <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">4</span></sup></Link>
                             <Link to="/notification" className="btn"><i className="fa h4  fa-bell"></i> <sup><span className="badge text-white bg-danger">4</span></sup></Link>
                         </Col>
@@ -97,7 +111,7 @@ class NavMenuDesktop extends Component {
                     <Row>
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
                             <Link to="/" className="btn"> <img className="nav-logo" src="images/logo.png"/></Link>
-                            <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> 4 items </Link>
+                            <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> {this.state.CartCount} items </Link>
                             <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">4</span></sup></Link>
                             <Link to="/notification" className="btn"><i className="fa h4  fa-bell"></i> <sup><span className="badge text-white bg-danger">4</span></sup></Link>
                             
