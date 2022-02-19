@@ -9,11 +9,11 @@ export default class ListByCategory extends Component {
     const myList = this.props.ProductData;
 
     const ListView = myList.map((productList,i)=>{
-        if(productList.special_price == 'NA'){
+        if(productList.special_price === 'NA'){
             return <Col className="p-1" key={i.toString()} xl={2} lg={2} md={2} sm={4} xs={6} >
             <Link to={"/productDetails/"+productList.product_code}>
             <Card className="card w-100 image-box ">
-                <img src={productList.image}/>
+                <img src={productList.image} alt={productList.title}/>
                 <Card.Body>
                     <h5 className="product-name-on-card">{productList.title}</h5>
                     <p className="product-price-on-card">Price: {productList.price}</p>

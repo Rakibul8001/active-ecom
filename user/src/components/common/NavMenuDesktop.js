@@ -15,6 +15,7 @@ class NavMenuDesktop extends Component {
             SearchRedirectStatus:false,
             HomeRedirectStatus:false,
             CartCount:0,
+            FavouriteCount:0
 
         }
         //bind functions, if I use es6 function no need bind, as like onLogout function
@@ -29,6 +30,12 @@ class NavMenuDesktop extends Component {
             this.setState({CartCount:res.data});
 
         }).catch(error=>{
+
+        });
+        //Favourite Item count
+        axios.get(ApiURL.FavCount(SessionHelper.GetUserMobile())).then(res=>{
+            this.setState({FavouriteCount:res.data});
+        }).catch(err=>{
 
         });
     }
@@ -72,7 +79,7 @@ class NavMenuDesktop extends Component {
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
                             <Link to="/" className="btn"> <img className="nav-logo" src="images/logo.png"/></Link>
                             <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> {this.state.CartCount} items </Link>
-                            <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">4</span></sup></Link>
+                            <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">{this.state.FavouriteCount}</span></sup></Link>
                             <Link to="/notification" className="btn"><i className="fa h4  fa-bell"></i> <sup><span className="badge text-white bg-danger">4</span></sup></Link>
                         </Col>
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
@@ -112,9 +119,9 @@ class NavMenuDesktop extends Component {
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
                             <Link to="/" className="btn"> <img className="nav-logo" src="images/logo.png"/></Link>
                             <Link to="/cart" className="cart-btn"><i className="fa fa-shopping-cart"></i> {this.state.CartCount} items </Link>
-                            <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">4</span></sup></Link>
+                            <Link to="/favourite" className="btn"><i className="fa h4 fa-heart"></i>  <sup><span className="badge text-white bg-danger">{this.state.FavouriteCount}</span></sup></Link>
                             <Link to="/notification" className="btn"><i className="fa h4  fa-bell"></i> <sup><span className="badge text-white bg-danger">4</span></sup></Link>
-                            
+
                         </Col>
                         <Col className="p-1" lg={5} md={5} sm={12} xs={12}>
                             <div className="input-group w-100">

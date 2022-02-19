@@ -133,7 +133,8 @@ class ProductDetails extends Component {
         axios.get(ApiURL.AddToFavourite(product_code,mobile)).then(res=>{
             if(res.data === 1){
                 this.setState({addToFav:"Favourite"});
-                toast.success("Added To Favourite List!")
+                toast.success("Added To Favourite List!");
+                window.location.reload();
             }
             else{
                 this.setState({addToFav:"Favourite"});

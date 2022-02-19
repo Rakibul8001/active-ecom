@@ -1,11 +1,9 @@
 <?php
 
-use App\Models\Cart;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProductController;
@@ -44,4 +42,6 @@ Route::get('/cartcount/{mobile}',[CartController::class,'CartCount']);
 //Add To Favourite List
 Route::get('add-to-favourite/{code}/{mobile}',[FavouriteController::class,'AddToFav']);
 Route::get('favourite-list/{mobile}',[FavouriteController::class,'FavList']);
+Route::get('remove-fav/{code}/{mobile}',[FavouriteController::class, 'removeFav']);
+Route::get('favourite-count/{mobile}',[FavouriteController::class,'FavCount']);
 

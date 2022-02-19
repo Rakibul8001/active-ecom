@@ -50,7 +50,7 @@ class UserOnboard extends Component {
 
             axios.post(ApiURL.CreateOtp, otpForm).then(response =>{
                 
-                if(response.status== 200){
+                if(response.status=== 200){
                     
                     btn.innerHTML = "Next";
                     toast.success("OTP has been sent successfully!")
@@ -96,7 +96,7 @@ class UserOnboard extends Component {
                                     </Form>
                                 </Col>
                                 <Col className="p-0 Desktop m-0" md={6} lg={6} sm={6} xs={6}>
-                                    <img className="onboardBanner" src="Images/otppagebanner.png"/>
+                                    <img className="onboardBanner" src="Images/otppagebanner.png" />
                                 </Col>
                             </Row>
                         </Col>
@@ -114,7 +114,7 @@ class UserOnboard extends Component {
                         pauseOnHover
                     />
 
-                {this.onRedirect()}
+                    {this.onRedirect()}
                 </Container>
 
             </Fragment>

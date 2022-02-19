@@ -45,6 +45,7 @@ class CartController extends Controller
     public function CartCount(Request $request){
         $mobile = $request->mobile;
         $result = Cart::where('mobile',$mobile)->count();
-        return $result; 
+        return $result;
     }
+
 }

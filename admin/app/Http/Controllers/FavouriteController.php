@@ -29,7 +29,20 @@ class FavouriteController extends Controller
     {
         $mobile = $request->mobile;
         $result = Favourite::where('mobile',$mobile)->get();
-        
+
+        return $result;
+    }
+
+    public function removeFav(Request $request){
+        $code = $request->code;
+        $mobile = $request->mobile;
+        $result = Favourite::where('product_code',$code)->where('mobile',$mobile)->delete();
+        return $result;
+    }
+
+    public function FavCount(Request $request){
+        $mobile = $request->mobile;
+        $result = Favourite::where('mobile',$mobile)->count();
         return $result;
     }
 }

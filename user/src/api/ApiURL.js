@@ -52,6 +52,13 @@ class ApiURL{
     static FavList(mobile){
         return this.BaseURL+"favourite-list/"+mobile;
     }
+    static removeFavItem(code,mobile){
+        return this.BaseURL+"remove-fav/"+code+"/"+mobile;
+    }
+    //Favourite Item Count
+    static FavCount(mobile){
+        return this.BaseURL+"favourite-count/"+mobile;
+    }
 }
 
 export default ApiURL;
