@@ -45,6 +45,12 @@ class ApiURL{
     static CartCount(mobile){
         return this.BaseURL+"cartcount/"+mobile;
     }
+    static CartList(mobile){
+        return this.BaseURL+"carts/"+mobile;
+    }
+    static removeCartItem(id){
+        return this.BaseURL+"cart-remove/"+id;
+    }
     //Add to favourite
     static AddToFavourite(code,mobile){
         return this.BaseURL+"add-to-favourite/"+code+"/"+mobile;

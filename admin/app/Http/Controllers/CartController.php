@@ -48,4 +48,16 @@ class CartController extends Controller
         return $result;
     }
 
+    public function CartList(Request $request){
+        $result = Cart::where('mobile',$request->mobile)->get();
+
+        return $result;
+    }
+
+    public function removeCartItem($id){
+        $result = Cart::findOrFail($id)->delete();
+
+        return $result;
+    }
+
 }

@@ -5,7 +5,8 @@ import ApiURL from '../../api/ApiURL';
 import ProductListLoader from '../placeholder/ProductListLoader';
 import SessionHelper from '../SessionHelper/SessionHelper';
 
-import {toast} from "react-toastify";
+import {toast, ToastContainer} from "react-toastify";
+import {Link} from "react-router-dom";
 
 class Favourite extends Component {
 
@@ -61,6 +62,7 @@ class Favourite extends Component {
                         <h5 className="product-name-on-card">{(productList.title).substring(0, 30)}</h5>
                         <Button onClick={this.removeItem} data-code={productList.product_code}
                                 className="btn btn-sm site-btn"><i className="fa fa-trash-alt"></i> Remove </Button>
+                        <Link to={"/productDetails/"+productList.product_code} className="btn btn-sm site-btn ml-1">Details</Link>
                     </Card.Body>
                 </Card>
             </Col>
@@ -78,9 +80,22 @@ class Favourite extends Component {
                     <Row>
                         {listView}
                     </Row>
-                </Container>
 
-                {this.PageReload()}
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+
+                    {this.PageReload()}
+
+                </Container>
             </Fragment>
         );
     }

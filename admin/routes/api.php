@@ -39,6 +39,8 @@ Route::get('/review-list/{code}',[ReviewController::class,'ReviewList']);
 //addToCart
 Route::post('/addToCart',[CartController::class,'AddToCart']);
 Route::get('/cartcount/{mobile}',[CartController::class,'CartCount']);
+Route::get('/carts/{mobile}',[CartController::class, 'CartList']);
+Route::get('/cart-remove/{id}',[CartController::class, 'removeCartItem']);
 //Add To Favourite List
 Route::get('add-to-favourite/{code}/{mobile}',[FavouriteController::class,'AddToFav']);
 Route::get('favourite-list/{mobile}',[FavouriteController::class,'FavList']);
