@@ -1,5 +1,5 @@
 import React, {Component,Fragment} from 'react';
-import {Button, Card,ListGroup, Col, Container, Row,Form} from "react-bootstrap";
+import {Col,Container,Row,Breadcrumb} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import axios from "axios";
 import ApiURL from "../../api/ApiURL";
@@ -14,7 +14,12 @@ class CartList extends Component {
             ProductData: [],
             isLoading: "",
             MainDiv: "d-none",
-            PageRefresh: false
+            PageRefresh: false,
+            city:"",
+            payment_method:"",
+            name:"",
+            address:""
+
         }
     }
 
@@ -26,9 +31,7 @@ class CartList extends Component {
         });
     }
 
-    removeCartItem = (e) => {
-        let id = e.target.getAttribute('data-id');
-
+    removeItem = (id) => {
         axios.get(ApiURL.removeCartItem(id)).then(res=>{
             if(res.data === 1){
                 toast.success("Item Removed");
@@ -43,61 +46,198 @@ class CartList extends Component {
         });
     }
 
+    itemPlus=(id,quantity,price)=>{
+        axios.get(ApiURL.CartItemPlus(id,quantity,price)).then((res)=>{
+            if(res.data===1){
+                toast.success("Item Quantity Increased",{position:'bottom-center'})
+                this.setState({PageRefresh:true})
+            }
+            else {
+                toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+            }
+
+        }).catch((err)=>{
+            toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+        })
+
+
+    }
+
+    itemMinus=(id,quantity,price)=>{
+
+        axios.get(ApiURL.CartItemMinus(id,quantity,price)).then((res)=>{
+            if(res.data===1){
+                toast.success("Item Quantity Decreased",{position:'bottom-center'})
+                this.setState({PageRefresh:true})
+            }
+            else {
+                toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+            }
+        }).catch((err)=>{
+            toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+        })
+
+    }
+
+    cityOnChange=(e)=>{
+        let city = e.target.value;
+        this.setState({city:city});
+    }
+
+    paymentMethodOnChange=(e)=>{
+        let payment_method = e.target.value;
+        this.setState({payment_method:payment_method});
+    }
+
+    nameOnChange=(e)=>{
+        let name = e.target.value;
+        this.setState({name:name});
+    }
+
+    addressOnChange=(e)=>{
+        let address = e.target.value;
+        this.setState({address:address});
+    }
+
+    confirmOnClick=()=>{
+        let city= this.state.city;
+        let payment=this.state.payment_method;
+        let name=this.state.name;
+        let address=this.state.address;
+
+        if(city.length===0){
+            toast.error("Please select city",{position:'bottom-center'})
+        }
+        else if(payment.length===0){
+            toast.error("Select payment method",{position:'bottom-center'})
+        }
+        else if(name.length===0){
+            toast.error("Your name required",{position:'bottom-center'})
+        }
+        else if(address.length===0){
+            toast.error("Delivery address required",{position:'bottom-center'})
+        }
+        else{
+            let invoice=new Date().getTime();
+            let mobile = SessionHelper.GetUserMobile()
+            let MyFormData=new FormData();
+            MyFormData.append('city',city);
+            MyFormData.append('paymentMethod',payment);
+            MyFormData.append('yourName',name);
+            MyFormData.append('deliveryAddress',address);
+            MyFormData.append('mobileNumber',mobile);
+            MyFormData.append('invoice_no',invoice);
+            MyFormData.append('ShippingPrice',"0000");
+
+            axios.post(ApiURL.CartOrder,MyFormData).then((res)=>{
+                if(res.data===1){
+                    toast.success("Order request received",{position:'bottom-center'})
+                    window.location.reload();
+                }
+                else{
+                    toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+                }
+            }).catch((err)=>{
+                toast.error("Request Fail ! Try Again",{position:'bottom-center'})
+            });
+        }
+    }
+
     PageReload=()=>{
         if(this.state.PageRefresh === true){
             window.location.reload();
         }
     }
 
+
     render() {
         let myList = this.state.ProductData;
+        let totalPrice = 0;
         let listView = myList.map((productList, i) => {
-            return  <Col className="p-1" key={i.toString()} xl={3} lg={3} md={3} sm={4} xs={6} >
-                <Card className="cart-card w-100 image-box ">
-                    <img src={productList.img} alt={productList.product_name}/>
-                    <Card.Body>
-                        <h5 className="product-name-on-card m-0 p-0">{(productList.product_name).substring(0,50)}</h5>
-                        <p className="product-price-on-card m-0 p-0">Total Price: {productList.unit_price}Tk</p>
-                    </Card.Body>
-                    <div className="input-group m-0 p-0 w-100">
-                        <Button onClick={this.removeCartItem} data-id={productList.id} className="btn text-danger w-50 btn-light"><i className="fa fa-trash-alt"></i> </Button>
-                        <input placeholder="5" className="form-control w-50 text-center" type="number" />
+            totalPrice = totalPrice+parseInt(productList.total_price);
+            return  <div className="container">
+                <div className="row">
+                    <div className="col-md-3 text-center col-lg-3 col-sm-4 col-6">
+                        <img className="w-100" src={productList.img} alt=""/>
+                        <button onClick={()=>this.removeItem(productList.id)}  className="btn mt-2 btn-sm site-btn"><i className="fa fa-trash-alt"/></button>
+                        <button onClick={()=>this.itemPlus(productList.id,productList.quantity,productList.unit_price)}  className="btn mt-2 mx-1 btn-sm site-btn"><i className="fa fa-plus"/></button>
+                        <button onClick={()=>this.itemMinus(productList.id,productList.quantity,productList.unit_price)}   className="btn mt-2 mx-1 btn-sm site-btn"><i className="fa fa-minus"/></button>
                     </div>
-                </Card>
-            </Col>
+                    <div className="col-md-7 col-lg-7 col-sm-8 col-6">
+                        <h5 className="product-name-on-card">{(productList.product_name).substring(0,50) }</h5>
+                        <h5 className="product-price-on-card">Total Price:{productList.total_price}TK</h5>
+                        <h5 className="product-name-on-card">{(productList.product_info)}</h5>
+                        <h5 className="product-price-on-card">Quantity:{ productList.quantity}</h5>
+                    </div>
+                </div>
+                <hr/>
+            </div>
         });
 
         return (
             <Fragment>
-                <br/>
                 <ProductListLoader isLoading={this.state.isLoading}/>
+                <Container className={this.state.MainDiv +" animated slideInDown TopSection"} fluid={true}>
+                    <Row>
+                        <Breadcrumb className="shadow-sm w-100 bg-white">
+                            <Breadcrumb.Item> <Link to="/">Home</Link>    </Breadcrumb.Item>
+                            <Breadcrumb.Item> <Link to={"/cart"}>Cart</Link></Breadcrumb.Item>
+                        </Breadcrumb>
 
-                <Container className={this.state.MainDiv +"TopSection pb-5 text-center shadow-sm bg-white"}>
-                    <Row className="p-2 bg-light text-center">
-                        <Col className="p-1" key={1} xl={12} lg={12} md={12} sm={12} xs={12}>
-                            <h5 className=" "> PRODUCT CART LIST</h5>
-                            <h6 className="m-0  p-0">Total Price 3000BDT | Total Item 04</h6>
-                            <Link to="#" className="btn m-1  site-btn"> <i className="fa fa-shopping-cart"></i> Checkout Now</Link>
+                    </Row>
+                    <Row className="mt-3">
+                        <Col md={7} lg={7} sm={12} xs={12}>
+                            {listView}
                         </Col>
-                    </Row>
-                    <Row className="p-2">
-                        {listView}
-                    </Row>
+                        <Col md={5} lg={5} sm={12} xs={12}>
+                            <div className="card p-2">
+                                <div className="card-body">
+                                    <div className="container-fluid ">
+                                        <div className="row">
+                                            <div className="col-md-12 p-1  col-lg-12 col-sm-12 col-12">
+                                                <h5 className="Product-Name text-danger">Total Due: {totalPrice} TK</h5>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                                                <label className="form-label">Choose City</label>
+                                                <select onChange={this.cityOnChange}  className="form-control">
+                                                    <option value="">Choose</option>
+                                                    <option value="Dhaka">Dhaka</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                                                <label className="form-label">Choose Payment Method</label>
+                                                <select onChange={this.paymentMethodOnChange} className="form-control">
+                                                    <option value="">Choose</option>
+                                                    <option value="Cash On Delivery">Cash On Delivery</option>
+                                                </select>
+                                            </div>
+                                            <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                                                <label className="form-label">Your Name</label>
+                                                <input onChange={this.nameOnChange} className="form-control" type="text" placeholder=""/>
+                                            </div>
 
-                    <ToastContainer
-                        position="top-right"
-                        autoClose={5000}
-                        hideProgressBar={false}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss
-                        draggable
-                        pauseOnHover
-                    />
+                                            <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                                                <label className="form-label">Delivery Address</label>
+                                                <textarea onChange={this.addressOnChange}  rows={2}  className="form-control" type="text" placeholder=""/>
+                                            </div>
+                                            <div className="col-md-12 p-1 col-lg-12 col-sm-12 col-12">
+                                                <button onClick={this.confirmOnClick}  className="btn  site-btn">Confirm</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Col>
 
-                    {this.PageReload()}
+
+                    </Row>
                 </Container>
+                <ToastContainer/>
+
+                {this.PageReload()}
+
             </Fragment>
         );
     }

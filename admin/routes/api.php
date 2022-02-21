@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\LoginController;
@@ -41,9 +42,13 @@ Route::post('/addToCart',[CartController::class,'AddToCart']);
 Route::get('/cartcount/{mobile}',[CartController::class,'CartCount']);
 Route::get('/carts/{mobile}',[CartController::class, 'CartList']);
 Route::get('/cart-remove/{id}',[CartController::class, 'removeCartItem']);
+Route::get('/CartItemPlus/{id}/{quantity}/{price}',[CartController::class,'CartItemPlus']);
+Route::get('/CartItemMinus/{id}/{quantity}/{price}',[CartController::class,'CartItemMinus']);
 //Add To Favourite List
 Route::get('add-to-favourite/{code}/{mobile}',[FavouriteController::class,'AddToFav']);
 Route::get('favourite-list/{mobile}',[FavouriteController::class,'FavList']);
 Route::get('remove-fav/{code}/{mobile}',[FavouriteController::class, 'removeFav']);
 Route::get('favourite-count/{mobile}',[FavouriteController::class,'FavCount']);
+//order
+Route::post('/CartOrder',[OrderController::class,'CartOrder']);
 

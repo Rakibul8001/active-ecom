@@ -51,6 +51,15 @@ class ApiURL{
     static removeCartItem(id){
         return this.BaseURL+"cart-remove/"+id;
     }
+
+    static CartItemMinus(id,quantity,price){
+        return this.BaseURL+"CartItemMinus/"+id+"/"+quantity+"/"+price;
+    }
+
+    static CartItemPlus(id,quantity,price){
+        return this.BaseURL+"CartItemPlus/"+id+"/"+quantity+"/"+price;
+    }
+
     //Add to favourite
     static AddToFavourite(code,mobile){
         return this.BaseURL+"add-to-favourite/"+code+"/"+mobile;
@@ -65,6 +74,8 @@ class ApiURL{
     static FavCount(mobile){
         return this.BaseURL+"favourite-count/"+mobile;
     }
+    //order
+    static  CartOrder=this.BaseURL+"CartOrder";
 }
 
 export default ApiURL;
