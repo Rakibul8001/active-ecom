@@ -59,4 +59,11 @@ class OrderController extends Controller
         }
         return $cartInsertDeleteResult;
     }
+
+    public function OrderByUser(Request $request){
+        $mobile = $request->mobile;
+        $result = Order::where('mobile',$mobile)->orderBy('id','desc')->get();
+
+        return $result;
+    }
 }

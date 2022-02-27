@@ -1,14 +1,13 @@
-import React, { Component, Fragment } from 'react';
-import { Redirect } from "react-router";
-import FooterDesktop from "../components/common/FooterDesktop";
-import FooterMobile from "../components/common/FooterMobile";
+import React, {Component, Fragment} from 'react';
 import NavMenuDesktop from "../components/common/NavMenuDesktop";
 import NavMenuMobile from "../components/common/NavMenuMobile";
-import UserOnboard from "../components/common/UserOnboard";
+import FooterDesktop from "../components/common/FooterDesktop";
+import FooterMobile from "../components/common/FooterMobile";
+import OrderList from '../components/Order/OrderList';
+import { Redirect } from 'react-router';
 import SessionHelper from '../components/SessionHelper/SessionHelper';
 
-class UserOnboardPage extends Component {
-
+export default class OrderListPage extends Component {
     constructor(){
         super();
         this.state={
@@ -19,18 +18,17 @@ class UserOnboardPage extends Component {
     PageRedirect=()=>{
         if(this.state.redirectStatus === true){
             return (
-                <Redirect to="/"/>
+                <Redirect to="/onboard"/>
             );
         }
     }
 
     componentDidMount() {
         window.scroll(0,0);
-        if(SessionHelper.GetUserMobile() != null){
+        if(SessionHelper.GetUserMobile() === null){
             this.setState({redirectStatus:true});
         }
     }
-
 
     render() {
         return (
@@ -42,7 +40,7 @@ class UserOnboardPage extends Component {
                     <NavMenuMobile/>
                 </div>
 
-                <UserOnboard/>
+                <OrderList/>
 
                 <div className="Desktop">
                     <FooterDesktop/>
@@ -50,11 +48,9 @@ class UserOnboardPage extends Component {
                 <div className="Mobile">
                     <FooterMobile/>
                 </div>
-
                 {this.PageRedirect()}
             </Fragment>
         );
     }
 }
 
-export default UserOnboardPage;

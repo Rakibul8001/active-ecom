@@ -48,6 +48,15 @@ class SessionHelper{
     static RemoveUserMobile(){
         return sessionStorage.removeItem("UserMobile");
     }
+
+    //Store Window location for after login where to redirect
+    static SetRememberPath(windowpath){
+        return sessionStorage.setItem('windowpath',windowpath);
+    }
+
+    static GetRememberPath(){
+        return sessionStorage.getItem("windowpath");
+    }
 }
 
 export default SessionHelper;

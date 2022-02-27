@@ -16,7 +16,7 @@ class ReviewController extends Controller
         $reviewer_rating = $request->input('reviewer_rating');
         $reviewer_comment = $request->input('reviewer_comment');
 
-        $result = Review::create([
+        $result = Review::insert([
             'product_code'=>$product_code,
             'product_name'=>$product_name,
             'mobile'=>$mobile,

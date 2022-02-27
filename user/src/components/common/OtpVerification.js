@@ -66,7 +66,15 @@ export default class OtpVerification extends Component {
 
   onRedirect(){
     if(this.state.redirect === true){
-      return <Redirect to="/" />
+      
+      let locationPath = SessionHelper.GetRememberPath();
+      if(locationPath === null){
+        return <Redirect to="/" />
+      }
+      else{
+        return <Redirect to={locationPath} />
+      }
+      
     }
   }
 

@@ -36,6 +36,7 @@ Route::get('/productListBySearch/{key}',[ProductController::class,'ProductBySear
 Route::post('/CreateOtp',[LoginController::class,'CreateOtp']);
 Route::post('/otp-verification',[LoginController::class,'otp_verification']);
 //Reviewlist
+Route::post('/review-post',[ReviewController::class,'postReview']);
 Route::get('/review-list/{code}',[ReviewController::class,'ReviewList']);
 //addToCart
 Route::post('/addToCart',[CartController::class,'AddToCart']);
@@ -51,4 +52,5 @@ Route::get('remove-fav/{code}/{mobile}',[FavouriteController::class, 'removeFav'
 Route::get('favourite-count/{mobile}',[FavouriteController::class,'FavCount']);
 //order
 Route::post('/CartOrder',[OrderController::class,'CartOrder']);
+Route::get('/orderByUser/{mobile}',[OrderController::class,'OrderByUser']);
 

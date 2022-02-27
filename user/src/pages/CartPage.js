@@ -4,12 +4,32 @@ import NavMenuMobile from "../components/common/NavMenuMobile";
 import FooterDesktop from "../components/common/FooterDesktop";
 import FooterMobile from "../components/common/FooterMobile";
 import CartList from "../components/Cart/CartList";
+import { Redirect } from 'react-router';
+import SessionHelper from '../components/SessionHelper/SessionHelper';
 
 class CartPage extends Component {
 
 
+    constructor(){
+        super();
+        this.state={
+            redirectStatus:false
+        }
+    }
+
+    PageRedirect=()=>{
+        if(this.state.redirectStatus === true){
+            return (
+                <Redirect to="/onboard"/>
+            );
+        }
+    }
+
     componentDidMount() {
-        window.scroll(0,0)
+        window.scroll(0,0);
+        if(SessionHelper.GetUserMobile() === null){
+            this.setState({redirectStatus:true});
+        }
     }
 
     render() {
@@ -31,6 +51,7 @@ class CartPage extends Component {
                     <FooterMobile/>
                 </div>
 
+                {this.PageRedirect()}
             </Fragment>
         );
     }

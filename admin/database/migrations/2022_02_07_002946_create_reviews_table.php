@@ -15,13 +15,13 @@ class CreateReviewsTable extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('product_code');
-            $table->string('product_name');
-            $table->string('mobile');
+            $table->string('product_code')->nullable();
+            $table->string('product_name')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('reviewer_photo')->nullable();
-            $table->string('reviewer_name');
-            $table->string('reviewer_rating');
-            $table->string('reviewer_comment');
+            $table->string('reviewer_name')->nullable();
+            $table->string('reviewer_rating')->nullable();
+            $table->string('reviewer_comment')->nullable();
             
         });
     }

@@ -96,7 +96,7 @@ class NavMenuDesktop extends Component {
                                     </Dropdown.Toggle>
                                     <Dropdown.Menu>
                                         <Dropdown.Item>Cart Item</Dropdown.Item>
-                                        <Dropdown.Item>Order List</Dropdown.Item>
+                                        <Dropdown.Item> <Link to="/order-list">Order List</Link> </Dropdown.Item>
                                         <Dropdown.Item onClick={this.onLogout}>Logout</Dropdown.Item>
                                     </Dropdown.Menu>
                                 </Dropdown>

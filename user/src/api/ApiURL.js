@@ -39,6 +39,8 @@ class ApiURL{
     static ReviewList(code){
         return this.BaseURL+"review-list/"+code;
     }
+
+    static postReview = this.BaseURL+"review-post";
     //addToCart
     static addToCartUrl = this.BaseURL+"addToCart";
     //Cart Count
@@ -76,6 +78,10 @@ class ApiURL{
     }
     //order
     static  CartOrder=this.BaseURL+"CartOrder";
+
+    static OrderByUser(mobile){
+        return this.BaseURL+"orderByUser/"+mobile;
+    }
 }
 
 export default ApiURL;

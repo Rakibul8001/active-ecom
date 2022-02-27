@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2022 at 06:40 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- Generation Time: Feb 27, 2022 at 07:31 PM
+-- Server version: 10.4.22-MariaDB
+-- PHP Version: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,33 @@ SET time_zone = "+00:00";
 --
 -- Database: `react_ecom`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `shop_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_info` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `quantity` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unit_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `total_price` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `img`, `product_name`, `product_code`, `shop_name`, `shop_code`, `product_info`, `quantity`, `unit_price`, `total_price`, `mobile`) VALUES
+(3, 'http://127.0.0.1:8000/storage/p1.jpg', 'ASUS TU', 'p1', NULL, NULL, 'Black-XXL', '03', '2000', '6000', '01768618001');
 
 -- --------------------------------------------------------
 
@@ -104,6 +131,28 @@ INSERT INTO `contact` (`id`, `name`, `mobile`, `message`, `contact_date`, `conta
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `favourites`
+--
+
+CREATE TABLE `favourites` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `img` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `favourites`
+--
+
+INSERT INTO `favourites` (`id`, `title`, `img`, `product_code`, `mobile`) VALUES
+(1, 'ASUS TU', 'http://127.0.0.1:8000/storage/p1.jpg', 'p1', '01768618001'),
+(2, 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', 'http://127.0.0.1:8000/storage/p1.jpg', 'p5', '01768618001');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -158,6 +207,42 @@ INSERT INTO `notifications` (`id`, `title`, `msg`, `created_at`, `updated_at`) V
 (6, 'As a result, there\'s no need to specify', 'As a result, there\'s no need to specify the id when it\'s already guarded. When you override that property, you are telling Laravel, \"Actually, don\'t guard everything. Only guard the properties that I specify.\" So essentially, you are unguarding other properties.', '2022-01-23 15:55:22', '2022-01-23 15:55:22'),
 (7, 'As a result, there\'s no need to specify', 'As a result, there\'s no need to specify the id when it\'s already guarded. When you override that property, you are telling Laravel, \"Actually, don\'t guard everything. Only guard the properties that I specify.\" So essentially, you are unguarding other properties.', '2022-01-23 15:55:22', '2022-01-23 15:55:22'),
 (8, 'As a result, there\'s no need to specify', 'As a result, there\'s no need to specify the id when it\'s already guarded. When you override that property, you are telling Laravel, \"Actually, don\'t guard everything. Only guard the properties that I specify.\" So essentially, you are unguarding other properties.', '2022-01-23 15:55:22', '2022-01-23 15:55:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `invoice_no` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_info` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_quantity` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `unit_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `total_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `delivery_charge` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_time` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `invoice_no`, `product_name`, `product_code`, `shop_name`, `shop_code`, `product_info`, `product_quantity`, `unit_price`, `total_price`, `mobile`, `name`, `payment_method`, `delivery_address`, `city`, `delivery_charge`, `order_date`, `order_time`, `order_status`) VALUES
+(1, 'C1645555537832', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', 'p2', NULL, NULL, 'Black-XL', '2', '3000', '6000', '01768618001', 'Rakibul', 'Cash On Delivery', 'Dhaka', 'Dhaka', '0000', '23-02-2022', '12:45:38am', 'Pending'),
+(2, 'C1645629783137', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', 'p2', NULL, NULL, 'Red-XXL', '01', '3000', '3000', '01768618001', 'Rakibul Islam', 'Cash On Delivery', 'Dhaka', 'Dhaka', '0000', '23-02-2022', '09:23:03pm', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -258,7 +343,10 @@ INSERT INTO `otps` (`id`, `mobile`, `otp`, `created_timestamp`, `created_date`, 
 (77, '01768618001', '679248', '1644073792', '05-02-2022', '09:09:52pm'),
 (78, '01768618001', '873975', '1644074816', '05-02-2022', '09:26:56pm'),
 (79, '01768618001', '325477', '1644075220', '05-02-2022', '09:33:40pm'),
-(80, '01648477222', '814000', '1644170729', '07-02-2022', '12:05:29am');
+(80, '01648477222', '814000', '1644170729', '07-02-2022', '12:05:29am'),
+(81, '01768618001', '670937', '1645554966', '23-02-2022', '12:36:06am'),
+(82, '01648477222', '153607', '1645986171', '28-02-2022', '12:22:51am'),
+(83, '01648477222', '445433', '1645986547', '28-02-2022', '12:29:07am');
 
 -- --------------------------------------------------------
 
@@ -387,13 +475,13 @@ INSERT INTO `product_details` (`id`, `product_code`, `img1`, `img2`, `img3`, `im
 
 CREATE TABLE `reviews` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `product_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobile` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `reviewer_photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `reviewer_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reviewer_rating` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reviewer_comment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `reviewer_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reviewer_rating` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `reviewer_comment` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -401,10 +489,10 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`id`, `product_code`, `product_name`, `mobile`, `reviewer_photo`, `reviewer_name`, `reviewer_rating`, `reviewer_comment`) VALUES
-(1, 'p1', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01648477222', NULL, 'Rakibul Islam', '3', 'consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'),
-(2, 'p1', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'Raju', '2', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'),
-(3, 'p2', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01648477222', NULL, 'Rakibul Islam', '3', 'consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.'),
-(4, 'p3', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'Raju', '2', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.');
+(5, 'p2', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'Rakibul', '4', 'fffffffffffffddddddddddddd'),
+(6, 'p2', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'gbdfsgdf', '3', 'fffffffsdddddddddrrrrrrrrrrr'),
+(7, 'p2', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'Rakib', '5', 'bbbbbbbbbbbbbbbbbbb'),
+(8, 'p2', 'ASUS TUF A15 FA506IU Ryzen 7 4800H GTX', '01768618001', NULL, 'bbgg', '5', 'bbvgg');
 
 -- --------------------------------------------------------
 
@@ -1223,11 +1311,121 @@ INSERT INTO `visitor` (`id`, `ip_address`, `visit_time`, `visit_date`) VALUES
 (720, '127.0.0.1', '10:49:11pm', '07-02-2022'),
 (721, '127.0.0.1', '10:49:18pm', '07-02-2022'),
 (722, '127.0.0.1', '10:52:06pm', '07-02-2022'),
-(723, '127.0.0.1', '11:11:43pm', '07-02-2022');
+(723, '127.0.0.1', '11:11:43pm', '07-02-2022'),
+(724, '127.0.0.1', '12:35:47am', '23-02-2022'),
+(725, '127.0.0.1', '12:36:28am', '23-02-2022'),
+(726, '127.0.0.1', '12:36:56am', '23-02-2022'),
+(727, '127.0.0.1', '12:44:59am', '23-02-2022'),
+(728, '127.0.0.1', '09:20:40pm', '23-02-2022'),
+(729, '127.0.0.1', '09:21:35pm', '23-02-2022'),
+(730, '127.0.0.1', '10:45:37pm', '27-02-2022'),
+(731, '127.0.0.1', '10:47:13pm', '27-02-2022'),
+(732, '127.0.0.1', '10:50:57pm', '27-02-2022'),
+(733, '127.0.0.1', '10:51:09pm', '27-02-2022'),
+(734, '127.0.0.1', '10:51:16pm', '27-02-2022'),
+(735, '127.0.0.1', '10:52:18pm', '27-02-2022'),
+(736, '127.0.0.1', '10:54:10pm', '27-02-2022'),
+(737, '127.0.0.1', '10:54:19pm', '27-02-2022'),
+(738, '127.0.0.1', '10:54:22pm', '27-02-2022'),
+(739, '127.0.0.1', '10:55:29pm', '27-02-2022'),
+(740, '127.0.0.1', '10:56:14pm', '27-02-2022'),
+(741, '127.0.0.1', '10:56:26pm', '27-02-2022'),
+(742, '127.0.0.1', '10:56:33pm', '27-02-2022'),
+(743, '127.0.0.1', '10:56:52pm', '27-02-2022'),
+(744, '127.0.0.1', '10:57:06pm', '27-02-2022'),
+(745, '127.0.0.1', '10:58:06pm', '27-02-2022'),
+(746, '127.0.0.1', '10:58:21pm', '27-02-2022'),
+(747, '127.0.0.1', '10:58:54pm', '27-02-2022'),
+(748, '127.0.0.1', '10:59:02pm', '27-02-2022'),
+(749, '127.0.0.1', '11:10:10pm', '27-02-2022'),
+(750, '127.0.0.1', '11:10:15pm', '27-02-2022'),
+(751, '127.0.0.1', '11:11:51pm', '27-02-2022'),
+(752, '127.0.0.1', '11:12:11pm', '27-02-2022'),
+(753, '127.0.0.1', '11:13:48pm', '27-02-2022'),
+(754, '127.0.0.1', '11:14:59pm', '27-02-2022'),
+(755, '127.0.0.1', '11:15:17pm', '27-02-2022'),
+(756, '127.0.0.1', '11:15:22pm', '27-02-2022'),
+(757, '127.0.0.1', '11:15:57pm', '27-02-2022'),
+(758, '127.0.0.1', '11:16:02pm', '27-02-2022'),
+(759, '127.0.0.1', '11:16:09pm', '27-02-2022'),
+(760, '127.0.0.1', '11:16:17pm', '27-02-2022'),
+(761, '127.0.0.1', '11:16:21pm', '27-02-2022'),
+(762, '127.0.0.1', '11:16:25pm', '27-02-2022'),
+(763, '127.0.0.1', '11:18:12pm', '27-02-2022'),
+(764, '127.0.0.1', '11:18:39pm', '27-02-2022'),
+(765, '127.0.0.1', '11:22:12pm', '27-02-2022'),
+(766, '127.0.0.1', '11:27:31pm', '27-02-2022'),
+(767, '127.0.0.1', '11:29:27pm', '27-02-2022'),
+(768, '127.0.0.1', '11:29:53pm', '27-02-2022'),
+(769, '127.0.0.1', '11:31:28pm', '27-02-2022'),
+(770, '127.0.0.1', '11:53:18pm', '27-02-2022'),
+(771, '127.0.0.1', '11:59:46pm', '27-02-2022'),
+(772, '127.0.0.1', '11:59:51pm', '27-02-2022'),
+(773, '127.0.0.1', '11:59:58pm', '27-02-2022'),
+(774, '127.0.0.1', '12:00:08am', '28-02-2022'),
+(775, '127.0.0.1', '12:00:15am', '28-02-2022'),
+(776, '127.0.0.1', '12:03:22am', '28-02-2022'),
+(777, '127.0.0.1', '12:05:01am', '28-02-2022'),
+(778, '127.0.0.1', '12:05:13am', '28-02-2022'),
+(779, '127.0.0.1', '12:05:25am', '28-02-2022'),
+(780, '127.0.0.1', '12:05:54am', '28-02-2022'),
+(781, '127.0.0.1', '12:06:06am', '28-02-2022'),
+(782, '127.0.0.1', '12:06:11am', '28-02-2022'),
+(783, '127.0.0.1', '12:07:58am', '28-02-2022'),
+(784, '127.0.0.1', '12:08:01am', '28-02-2022'),
+(785, '127.0.0.1', '12:08:06am', '28-02-2022'),
+(786, '127.0.0.1', '12:11:39am', '28-02-2022'),
+(787, '127.0.0.1', '12:11:51am', '28-02-2022'),
+(788, '127.0.0.1', '12:11:58am', '28-02-2022'),
+(789, '127.0.0.1', '12:12:00am', '28-02-2022'),
+(790, '127.0.0.1', '12:12:03am', '28-02-2022'),
+(791, '127.0.0.1', '12:13:30am', '28-02-2022'),
+(792, '127.0.0.1', '12:13:34am', '28-02-2022'),
+(793, '127.0.0.1', '12:13:36am', '28-02-2022'),
+(794, '127.0.0.1', '12:13:43am', '28-02-2022'),
+(795, '127.0.0.1', '12:14:46am', '28-02-2022'),
+(796, '127.0.0.1', '12:14:49am', '28-02-2022'),
+(797, '127.0.0.1', '12:14:53am', '28-02-2022'),
+(798, '127.0.0.1', '12:15:23am', '28-02-2022'),
+(799, '127.0.0.1', '12:15:45am', '28-02-2022'),
+(800, '127.0.0.1', '12:15:55am', '28-02-2022'),
+(801, '127.0.0.1', '12:17:29am', '28-02-2022'),
+(802, '127.0.0.1', '12:18:01am', '28-02-2022'),
+(803, '127.0.0.1', '12:18:14am', '28-02-2022'),
+(804, '127.0.0.1', '12:18:26am', '28-02-2022'),
+(805, '127.0.0.1', '12:18:31am', '28-02-2022'),
+(806, '127.0.0.1', '12:18:34am', '28-02-2022'),
+(807, '127.0.0.1', '12:18:38am', '28-02-2022'),
+(808, '127.0.0.1', '12:18:44am', '28-02-2022'),
+(809, '127.0.0.1', '12:18:47am', '28-02-2022'),
+(810, '127.0.0.1', '12:18:53am', '28-02-2022'),
+(811, '127.0.0.1', '12:19:39am', '28-02-2022'),
+(812, '127.0.0.1', '12:19:41am', '28-02-2022'),
+(813, '127.0.0.1', '12:22:14am', '28-02-2022'),
+(814, '127.0.0.1', '12:22:35am', '28-02-2022'),
+(815, '127.0.0.1', '12:24:45am', '28-02-2022'),
+(816, '127.0.0.1', '12:24:47am', '28-02-2022'),
+(817, '127.0.0.1', '12:26:42am', '28-02-2022'),
+(818, '127.0.0.1', '12:26:56am', '28-02-2022'),
+(819, '127.0.0.1', '12:26:58am', '28-02-2022'),
+(820, '127.0.0.1', '12:27:02am', '28-02-2022'),
+(821, '127.0.0.1', '12:27:03am', '28-02-2022'),
+(822, '127.0.0.1', '12:27:05am', '28-02-2022'),
+(823, '127.0.0.1', '12:27:45am', '28-02-2022'),
+(824, '127.0.0.1', '12:27:47am', '28-02-2022'),
+(825, '127.0.0.1', '12:27:49am', '28-02-2022'),
+(826, '127.0.0.1', '12:28:33am', '28-02-2022'),
+(827, '127.0.0.1', '12:28:39am', '28-02-2022');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `category_level1`
@@ -1248,6 +1446,12 @@ ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `favourites`
+--
+ALTER TABLE `favourites`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -1257,6 +1461,12 @@ ALTER TABLE `migrations`
 -- Indexes for table `notifications`
 --
 ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1312,6 +1522,12 @@ ALTER TABLE `visitor`
 --
 
 --
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `category_level1`
 --
 ALTER TABLE `category_level1`
@@ -1330,6 +1546,12 @@ ALTER TABLE `contact`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `favourites`
+--
+ALTER TABLE `favourites`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
@@ -1342,10 +1564,16 @@ ALTER TABLE `notifications`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `otps`
 --
 ALTER TABLE `otps`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -1363,7 +1591,7 @@ ALTER TABLE `product_details`
 -- AUTO_INCREMENT for table `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `settings`
@@ -1387,7 +1615,7 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `visitor`
 --
 ALTER TABLE `visitor`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=724;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=828;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

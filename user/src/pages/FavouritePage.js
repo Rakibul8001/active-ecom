@@ -5,12 +5,31 @@ import Policy from "../components/Others/Policy";
 import FooterDesktop from "../components/common/FooterDesktop";
 import FooterMobile from "../components/common/FooterMobile";
 import Favourite from "../components/Favourite/Favourite";
+import SessionHelper from '../components/SessionHelper/SessionHelper';
+import { Redirect } from 'react-router';
 
 class FavouritePage extends Component {
 
+    constructor(){
+        super();
+        this.state={
+            redirectStatus:false
+        }
+    }
+
+    PageRedirect=()=>{
+        if(this.state.redirectStatus === true){
+            return (
+                <Redirect to="/onboard"/>
+            );
+        }
+    }
 
     componentDidMount() {
-        window.scroll(0,0)
+        window.scroll(0,0);
+        if(SessionHelper.GetUserMobile() === null){
+            this.setState({redirectStatus:true});
+        }
     }
     render() {
         return (
@@ -30,7 +49,7 @@ class FavouritePage extends Component {
                 <div className="Mobile">
                     <FooterMobile/>
                 </div>
-
+                {this.PageRedirect()}
             </Fragment>
         );
     }

@@ -23,7 +23,8 @@ class ProductDetails extends Component {
             productCode:null,
             AddToCart:"Add To Cart",
             PageRefresh:false,
-            addToFav:"Favourite"
+            addToFav:"Favourite",
+            RedirectToLogin:false
         }
     }
 
@@ -54,7 +55,7 @@ class ProductDetails extends Component {
 
     //AddToCart
     addToCartButton=()=>{
-        if(SessionHelper.GetUserMobile() !=null){
+        if(SessionHelper.GetUserMobile() !==null){
             let isColor = this.state.isColor;
             let isSize = this.state.isSize;
             let color = this.state.color;
@@ -97,7 +98,16 @@ class ProductDetails extends Component {
             }
         }
         else{
-            toast.error("User mobile not found!");
+
+            let rememberpath = window.location.pathname;
+
+            SessionHelper.SetRememberPath(rememberpath);
+
+            setTimeout(function(){
+                toast.error("User mobile not found! Please Login First");
+            }, 1000);
+
+            this.setState({RedirectToLogin:true});
         }
 
     }
@@ -124,26 +134,52 @@ class ProductDetails extends Component {
 
     }
 
+
+
     //addToFav
     addToFavButton =()=>{
-        let mobile = SessionHelper.GetUserMobile();
-        let product_code=this.state.productCode;
 
-        this.setState({addToFav:"Adding..."});
-        axios.get(ApiURL.AddToFavourite(product_code,mobile)).then(res=>{
-            if(res.data === 1){
-                this.setState({addToFav:"Favourite"});
-                toast.success("Added To Favourite List!");
-                window.location.reload();
-            }
-            else{
+        if(SessionHelper.GetUserMobile() !== null){
+
+            let mobile = SessionHelper.GetUserMobile();
+            let product_code=this.state.productCode;
+
+            this.setState({addToFav:"Adding..."});
+            axios.get(ApiURL.AddToFavourite(product_code,mobile)).then(res=>{
+                if(res.data === 1){
+                    this.setState({addToFav:"Favourite"});
+                    toast.success("Added To Favourite List!");
+                    window.location.reload();
+                }
+                else{
+                    this.setState({addToFav:"Favourite"});
+                    toast.error("Request Failed! Try again");
+                }
+            }).catch(err=>{
                 this.setState({addToFav:"Favourite"});
                 toast.error("Request Failed! Try again");
-            }
-        }).catch(err=>{
-            this.setState({addToFav:"Favourite"});
-            toast.error("Request Failed! Try again");
-        });
+            });
+
+        }
+        else{
+
+            let rememberpath = window.location.pathname;
+
+            SessionHelper.SetRememberPath(rememberpath);
+
+            setTimeout(function(){
+                toast.error("User mobile not found! Please Login First");
+            }, 1000);
+            this.setState({RedirectToLogin:true});
+        }
+    }
+
+    PageRedirectToLogin=()=>{
+        if(this.state.RedirectToLogin === true){
+            return (
+                <Redirect to="/onboard" />
+            );
+        }
     }
 
     render() {  
@@ -323,6 +359,8 @@ class ProductDetails extends Component {
                 <SuggestedProducts subcategory={subcategory} />
                 {/* Page Refresh rendering */}
                 {this.RefreshPage()}
+
+                {this.PageRedirectToLogin()}
 
             </Fragment>
         );
